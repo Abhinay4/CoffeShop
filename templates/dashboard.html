@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Pareta's Cafe{% endblock %}
+
+{% block content %}
+<section class="dashboard-hero">
+  <div class="container">
+    <span class="eyebrow">Signed in</span>
+    <h1>Hi, {{ user.full_name.split(' ')[0] }}.</h1>
+    <p style="max-width: 50ch; margin: 0 auto;">
+      This is your member dashboard. Order history, saved roasts, and rewards
+      progress would live here — wire it up to your own data as the shop grows.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">&#128231;</div>
+        <h3>Account email</h3>
+        <p>{{ user.email }}</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128197;</div>
+        <h3>Member since</h3>
+        <p>{{ user.created_at.strftime('%B %d, %Y') }}</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#127942;</div>
+        <h3>Rewards progress</h3>
+        <p>0 of 5 orders toward your next free bag.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

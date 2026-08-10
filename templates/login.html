@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Log in — Ember & Bean{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+  <div class="auth-visual">
+    <div class="auth-visual-content">
+      <span class="eyebrow">Welcome back</span>
+      <h2>Your next cup is waiting.</h2>
+      <p>Log in to reorder your favorite roast, track past orders, and see what's fresh off the roaster this week.</p>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-card">
+      <div class="auth-mobile-intro">
+        <span class="eyebrow">Welcome back</span>
+        <p>Log in to reorder your favorite roast and track your orders.</p>
+      </div>
+
+      <h1>Log in</h1>
+      <p class="lead">Good to see you again.</p>
+
+      <form method="POST" action="{{ url_for('auth.login') }}" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="field-group">
+          {{ form.email.label }}
+          {{ form.email(placeholder="you@example.com") }}
+          {% if form.email.errors %}
+            <ul class="field-errors">
+              {% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <div class="field-group">
+          {{ form.password.label }}
+          {{ form.password(placeholder="••••••••") }}
+          {% if form.password.errors %}
+            <ul class="field-errors">
+              {% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <div class="check-row">
+          {{ form.remember() }}
+          {{ form.remember.label }}
+        </div>
+
+        {{ form.submit(class="btn btn-primary btn-block") }}
+      </form>
+
+      <p class="auth-switch">New here? <a href="{{ url_for('auth.register') }}">Create an account</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}Pareta's Cafe — Small-batch coffee, roasted weekly{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <div class="cover-photo" aria-hidden="true">
+    <svg viewBox="0 0 1200 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="120" cy="180" r="140" fill="#ffffff" opacity="0.06"/>
+      <circle cx="980" cy="40" r="180" fill="#ffffff" opacity="0.06"/>
+      <circle cx="600" cy="260" r="220" fill="#ffffff" opacity="0.05"/>
+    </svg>
+  </div>
+
+  <div class="page-identity">
+    <div class="page-avatar" aria-hidden="true">&#9749;</div>
+    <div class="page-meta">
+      <h1>Pareta's Cafe</h1>
+      <p class="page-sub">Coffee Shop · Roasted fresh, poured daily · Bengaluru</p>
+    </div>
+    <div class="page-actions">
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('main.index') }}#menu" class="btn btn-primary">Order now</a>
+      {% else %}
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Create an account</a>
+      {% endif %}
+      <a href="{{ url_for('cart.view') }}" class="btn btn-outline">View cart</a>
+    </div>
+  </div>
+
+  <nav class="page-tabs">
+    <a href="{{ url_for('main.index') }}" class="active">Home</a>
+    <a href="{{ url_for('main.index') }}#menu">Menu</a>
+    <a href="{{ url_for('main.index') }}#about">About</a>
+  </nav>
+</div>
+
+<section class="section" style="padding-top:24px;">
+  <div class="container">
+    <div class="card" style="padding:20px 24px;">
+      <p style="margin-bottom:0; color:var(--text);">
+        Small-batch coffee, roasted in-house twice a week. Direct-trade origins,
+        cupped before every batch ships, and poured fresh at our counter — no
+        filler blends, no mystery beans.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="menu">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">This week's lineup</span>
+      <h2>Four roasts, ordered light to dark</h2>
+      <p>Every bag lists its roast level, origin, and tasting notes — so you know exactly what's in the cup.</p>
+    </div>
+
+    <div class="menu-board">
+      {% for item in menu %}
+      <div class="menu-row">
+        <span class="menu-level">{{ item.level }}</span>
+        <div>
+          <p class="menu-name">{{ item.name }}</p>
+          <p class="menu-notes">{{ item.notes }}</p>
+        </div>
+        <div class="menu-buy">
+          <span class="menu-price">${{ item.price_display() }}</span>
+          <form action="{{ url_for('cart.add', product_id=item.id) }}" method="POST" class="add-to-cart-form">
+            <input type="hidden" name="next" value="{{ request.path }}#menu">
+            <input type="number" name="quantity" value="1" min="1" max="20" aria-label="Quantity">
+            <button type="submit" class="btn btn-primary btn-sm">Add to cart</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if not menu %}
+      <p style="text-align:center;">The menu is empty right now — run <code>python seed.py</code> to load starter products.</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Why Pareta's Cafe</span>
+      <h2>Built around the cup, not the counter</h2>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">&#9749;</div>
+        <h3>Roasted to order</h3>
+        <p>Beans leave the roaster within 72 hours of your order — never sitting in a warehouse.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#127811;</div>
+        <h3>Direct-trade origins</h3>
+        <p>We work with the same six farms year-round and pay well above commodity price.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9733;</div>
+        <h3>Member rewards</h3>
+        <p>Create an account to save your favorite roasts, track orders, and earn a free bag every 5th visit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band" style="max-width: 720px;">
+      <h2>Ready for your first bag?</h2>
+      <p>Join in under a minute — no spam, just roast-day notices and your order history in one place.</p>
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary">View dashboard</a>
+      {% else %}
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Create your account</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}
