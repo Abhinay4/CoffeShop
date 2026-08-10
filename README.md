@@ -103,6 +103,40 @@ Visit **http://127.0.0.1:5000** — you'll land on the coffee shop homepage.
 Use the **Join** button to register, then **Log in** to view the member
 dashboard.
 
+## Running with Docker
+
+Requires Docker Desktop (or Docker Engine + Compose plugin) installed.
+
+```bash
+cp .env.example .env
+# Edit .env and set a real SECRET_KEY. DATABASE_URL is overridden by
+# docker-compose.yml so it points at the "db" service instead of localhost.
+
+docker compose up --build
+```
+
+This starts two containers:
+
+- `db` — Postgres 16, with data persisted in a named volume (`pgdata`)
+- `web` — the Flask app, served by `gunicorn`. On startup it waits for
+  Postgres to accept connections, then runs `flask db upgrade` to apply
+  migrations automatically.
+
+Visit **http://localhost:5000**. To load the starter menu into the
+containerized database:
+
+```bash
+docker compose exec web python seed.py
+```
+
+Useful commands:
+
+```bash
+docker compose logs -f web   # tail app logs
+docker compose down          # stop containers (keeps the db volume)
+docker compose down -v       # stop and wipe the db volume too
+```
+
 ## Notes on production readiness
 
 - Set `debug=False` and use a production WSGI server (e.g. `gunicorn app:app`).
