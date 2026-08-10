@@ -1,26 +1,28 @@
-/* Facebook-Page-inspired theme: light gray canvas, white cards, blue accents, system sans-serif */
+/* Professional coffee shop theme: warm cream canvas, espresso/gold accents, serif display type */
 
 :root {
-  --fb-blue: #1877F2;
-  --fb-blue-hover: #166FE5;
-  --fb-blue-tint: #E7F3FF;
-  --fb-green: #42B72A;
-  --fb-green-hover: #36A420;
+  --coffee: #6F4534;
+  --coffee-dark: #3C2415;
+  --coffee-hover: #2C1A0F;
+  --coffee-tint: #F3E7DA;
+  --gold: #B8894F;
+  --gold-hover: #A17538;
 
-  --bg: #F0F2F5;
+  --bg: #FAF5EE;
   --paper: #FFFFFF;
-  --text: #050505;
-  --text-secondary: #65676B;
-  --line: #DADDE1;
-  --line-soft: #E4E6EB;
-  --danger: #E41E3F;
+  --text: #2B1B12;
+  --text-secondary: #7A6355;
+  --line: #E6D9CB;
+  --line-soft: #EFE4D8;
+  --danger: #B3452B;
+  --success: #4C7A4C;
 
-  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-display: var(--font-body);
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
 
-  --radius: 8px;
-  --radius-sm: 6px;
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.06);
+  --radius: 10px;
+  --radius-sm: 7px;
+  --shadow-card: 0 1px 2px rgba(60, 36, 21, 0.08), 0 4px 10px rgba(60, 36, 21, 0.07);
   --container-width: 1120px;
 }
 
@@ -58,7 +60,7 @@ h1, h2, h3, h4 {
 p { margin: 0 0 1em; color: var(--text-secondary); }
 
 :focus-visible {
-  outline: 2px solid var(--fb-blue);
+  outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
 
@@ -79,10 +81,10 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
 }
 
 .btn-primary {
-  background: var(--fb-blue);
+  background: var(--coffee-dark);
   color: #FFFFFF;
 }
-.btn-primary:hover { background: var(--fb-blue-hover); }
+.btn-primary:hover { background: var(--coffee-hover); }
 
 .btn-outline {
   background: var(--line-soft);
@@ -116,7 +118,7 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 800;
-  color: var(--fb-blue);
+  color: var(--gold);
 }
 .brand span { color: var(--text); font-weight: 800; }
 
@@ -136,7 +138,7 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
   border-radius: var(--radius-sm);
   transition: background 0.15s ease, color 0.15s ease;
 }
-.nav-links a:hover { background: var(--line-soft); color: var(--fb-blue); }
+.nav-links a:hover { background: var(--line-soft); color: var(--coffee-dark); }
 
 .nav-cta { display: flex; align-items: center; gap: 8px; }
 
@@ -194,20 +196,20 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
   background: var(--paper);
   color: var(--text);
   border: 1px solid var(--line);
-  border-left: 4px solid var(--fb-blue);
+  border-left: 4px solid var(--coffee-dark);
   box-shadow: var(--shadow-card);
 }
-.flash-success { border-left-color: var(--fb-green); }
+.flash-success { border-left-color: var(--success); }
 .flash-danger { border-left-color: var(--danger); }
-.flash-info { border-left-color: var(--fb-blue); }
+.flash-info { border-left-color: var(--coffee-dark); }
 
-/* --- Page header (Facebook "business page" style: cover + identity card) --- */
+/* --- Page header (cover photo + identity card) --- */
 .page-header { background: var(--paper); border-bottom: 1px solid var(--line); }
 
 .cover-photo {
   height: 220px;
   width: 100%;
-  background: linear-gradient(120deg, #1877F2 0%, #0A4FB8 55%, #063a8a 100%);
+  background: linear-gradient(120deg, #8B5E3C 0%, #4A2C1A 55%, #2C1A0F 100%);
   position: relative;
   overflow: hidden;
 }
@@ -275,8 +277,8 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 .page-tabs a:hover, .page-tabs a.active {
-  color: var(--fb-blue);
-  border-bottom-color: var(--fb-blue);
+  color: var(--coffee-dark);
+  border-bottom-color: var(--gold);
 }
 
 /* --- Section shared --- */
@@ -294,7 +296,7 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
   font-weight: 700;
 }
 
-/* Generic white card, Facebook-post style */
+/* Generic white card */
 .card {
   background: var(--paper);
   border: 1px solid var(--line);
@@ -302,7 +304,7 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
   box-shadow: var(--shadow-card);
 }
 
-/* --- Menu (as a feed-style card list) --- */
+/* --- Menu (card list) --- */
 .menu-board {
   background: var(--paper);
   border: 1px solid var(--line);
@@ -323,7 +325,7 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
   font-size: 0.7rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--fb-blue);
+  color: var(--gold-hover);
   font-weight: 700;
 }
 .menu-name {
@@ -380,8 +382,8 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
 .feature-icon {
   width: 42px; height: 42px;
   border-radius: 50%;
-  background: var(--fb-blue-tint);
-  color: var(--fb-blue);
+  background: var(--coffee-tint);
+  color: var(--coffee-dark);
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 12px;
   font-size: 1.2rem;
@@ -446,7 +448,7 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--fb-blue);
+  color: var(--gold-hover);
   font-weight: 700;
 }
 .auth-mobile-intro p { font-size: 0.88rem; margin: 4px 0 0; }
@@ -473,9 +475,9 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .field-group input:focus {
-  border-color: var(--fb-blue);
+  border-color: var(--gold);
   outline: none;
-  box-shadow: 0 0 0 2px var(--fb-blue-tint);
+  box-shadow: 0 0 0 2px var(--coffee-tint);
 }
 .field-errors {
   list-style: none;
@@ -492,7 +494,7 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
   font-size: 0.87rem;
   color: var(--text-secondary);
 }
-.check-row input { accent-color: var(--fb-blue); }
+.check-row input { accent-color: var(--gold); }
 
 .auth-switch {
   margin-top: 20px;
@@ -500,7 +502,7 @@ p { margin: 0 0 1em; color: var(--text-secondary); }
   font-size: 0.88rem;
   color: var(--text-secondary);
 }
-.auth-switch a { color: var(--fb-blue); font-weight: 600; }
+.auth-switch a { color: var(--coffee-dark); font-weight: 600; }
 
 /* --- Dashboard --- */
 .dashboard-hero { padding: 32px 0 8px; text-align: center; }
