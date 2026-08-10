@@ -64,7 +64,7 @@
           <p class="menu-notes">{{ item.notes }}</p>
         </div>
         <div class="menu-buy">
-          <span class="menu-price">${{ item.price_display() }}</span>
+          <span class="menu-price">₹{{ item.price_display() }}</span>
           <form action="{{ url_for('cart.add', product_id=item.id) }}" method="POST" class="add-to-cart-form">
             <input type="hidden" name="next" value="{{ request.path }}#menu">
             <input type="number" name="quantity" value="1" min="1" max="20" aria-label="Quantity">

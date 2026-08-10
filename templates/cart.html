@@ -25,7 +25,7 @@
             <button type="submit" class="btn btn-outline btn-sm">Update</button>
           </form>
 
-          <span class="menu-price">${{ line.line_total }}</span>
+          <span class="menu-price">₹{{ line.line_total }}</span>
 
           <form action="{{ url_for('cart.remove', product_id=line.product.id) }}" method="POST">
             <button type="submit" class="link-remove" aria-label="Remove {{ line.product.name }}">Remove</button>
@@ -40,7 +40,7 @@
         </form>
         <div class="cart-total">
           <span>Total</span>
-          <strong>${{ total }}</strong>
+          <strong>₹{{ total }}</strong>
         </div>
       </div>
 
