@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Checkout — Pareta's Cafe{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top:56px;">
+  <div class="container" style="max-width: 980px;">
+    <div class="section-head" style="margin-bottom:32px;">
+      <span class="eyebrow">Almost there</span>
+      <h2>Checkout</h2>
+    </div>
+
+    <div class="checkout-grid">
+      <div class="checkout-form-card">
+        <h3>Delivery details</h3>
+
+        <form method="POST" action="{{ url_for('checkout.checkout') }}" novalidate>
+          {{ form.hidden_tag() }}
+
+          <div class="field-group">
+            {{ form.full_name.label }}
+            {{ form.full_name(placeholder="Your name") }}
+            {% if form.full_name.errors %}
+              <ul class="field-errors">{% for error in form.full_name.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              {{ form.email.label }}
+              {{ form.email(placeholder="you@example.com") }}
+              {% if form.email.errors %}
+                <ul class="field-errors">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+              {% endif %}
+            </div>
+            <div class="field-group">
+              {{ form.phone.label }}
+              {{ form.phone(placeholder="98765 43210") }}
+              {% if form.phone.errors %}
+                <ul class="field-errors">{% for error in form.phone.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="field-group">
+            {{ form.address_line1.label }}
+            {{ form.address_line1(placeholder="House no., street") }}
+            {% if form.address_line1.errors %}
+              <ul class="field-errors">{% for error in form.address_line1.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+          <div class="field-group">
+            {{ form.address_line2.label }}
+            {{ form.address_line2(placeholder="Apartment, suite, floor") }}
+          </div>
+
+          <div class="field-row field-row-3">
+            <div class="field-group">
+              {{ form.city.label }}
+              {{ form.city(placeholder="City") }}
+              {% if form.city.errors %}
+                <ul class="field-errors">{% for error in form.city.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+              {% endif %}
+            </div>
+            <div class="field-group">
+              {{ form.state.label }}
+              {{ form.state(placeholder="State") }}
+              {% if form.state.errors %}
+                <ul class="field-errors">{% for error in form.state.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+              {% endif %}
+            </div>
+            <div class="field-group">
+              {{ form.postal_code.label }}
+              {{ form.postal_code(placeholder="PIN code") }}
+              {% if form.postal_code.errors %}
+                <ul class="field-errors">{% for error in form.postal_code.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>{{ form.payment_method.label }}</label>
+            <div class="radio-group">
+              {% for subfield in form.payment_method %}
+                <label class="radio-option">
+                  {{ subfield }} {{ subfield.label.text }}
+                </label>
+              {% endfor %}
+            </div>
+            {% if form.payment_method.errors %}
+              <ul class="field-errors">{% for error in form.payment_method.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+          {{ form.submit(class="btn btn-primary btn-block") }}
+        </form>
+      </div>
+
+      <div class="order-summary-card">
+        <h3>Order summary</h3>
+
+        <div class="summary-lines">
+          {% for line in lines %}
+          <div class="summary-line">
+            <span>{{ line.quantity }} &times; {{ line.product.name }}</span>
+            <span>₹{{ line.line_total }}</span>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <strong>₹{{ total }}</strong>
+        </div>
+
+        <a href="{{ url_for('cart.view') }}" class="link-edit-cart">Edit cart</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

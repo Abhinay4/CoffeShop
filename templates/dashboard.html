@@ -7,8 +7,8 @@
     <span class="eyebrow">Signed in</span>
     <h1>Hi, {{ user.full_name.split(' ')[0] }}.</h1>
     <p style="max-width: 50ch; margin: 0 auto;">
-      This is your member dashboard. Order history, saved roasts, and rewards
-      progress would live here — wire it up to your own data as the shop grows.
+      This is your member dashboard. Saved roasts and rewards progress would
+      live here — wire it up to your own data as the shop grows.
     </p>
   </div>
 </section>
@@ -32,6 +32,10 @@
         <p>0 of 5 orders toward your next free bag.</p>
       </div>
     </div>
+    <p style="text-align:center; margin-top:24px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <a href="{{ url_for('main.order_history') }}" class="btn btn-outline">View order history</a>
+      <a href="{{ url_for('main.profile') }}" class="btn btn-outline">Edit profile</a>
+    </p>
   </div>
 </section>
 {% endblock %}

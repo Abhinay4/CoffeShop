@@ -46,7 +46,7 @@
 
       <div class="cart-checkout">
         <a href="{{ url_for('main.index') }}#menu" class="btn btn-outline">Keep browsing</a>
-        <button type="button" class="btn btn-primary" disabled title="Checkout isn't wired up yet">Checkout (coming soon)</button>
+        <a href="{{ url_for('checkout.checkout') }}" class="btn btn-primary">Checkout</a>
       </div>
     {% else %}
       <div class="empty-cart">

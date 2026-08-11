@@ -16,10 +16,12 @@ def create_app(config_class=Config):
     from auth import auth_bp
     from main import main_bp
     from cart import cart_bp
+    from checkout import checkout_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(cart_bp)
+    app.register_blueprint(checkout_bp)
 
     @app.context_processor
     def inject_cart_count():

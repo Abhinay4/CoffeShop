@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Order history — Pareta's Cafe{% endblock %}
+
+{% block content %}
+<section class="dashboard-hero">
+  <div class="container">
+    <span class="eyebrow">Your account</span>
+    <h1>Order history</h1>
+    <p style="max-width: 50ch; margin: 0 auto;">
+      Every order you've placed with Pareta's Cafe, newest first.
+    </p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:24px;">
+  <div class="container" style="max-width: 760px;">
+    {% if orders %}
+      <div class="order-list">
+        {% for order in orders %}
+          <a class="order-card" href="{{ url_for('checkout.confirmation', order_id=order.id) }}">
+            <div class="order-card-head">
+              <div>
+                <strong>Order #{{ order.id }}</strong>
+                <span class="order-date">{{ order.created_at.strftime('%b %d, %Y') }} at {{ order.created_at.strftime('%I:%M %p') }}</span>
+              </div>
+              <span class="order-status order-status-{{ order.status }}">{{ order.status|capitalize }}</span>
+            </div>
+            <div class="order-card-body">
+              <span>{{ order.items|length }} item{{ 's' if order.items|length != 1 else '' }}</span>
+              <strong>₹{{ order.total_display() }}</strong>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-cart">
+        <span class="eyebrow">No orders yet</span>
+        <h2>You haven't ordered anything.</h2>
+        <p>Once you place an order, it'll show up here with the date and time.</p>
+        <a href="{{ url_for('main.index') }}#menu" class="btn btn-primary" style="margin-top:16px;">Browse the menu</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Your profile — Pareta's Cafe{% endblock %}
+
+{% block content %}
+<section class="dashboard-hero">
+  <div class="container">
+    <span class="eyebrow">Your account</span>
+    <h1>Profile</h1>
+    <p style="max-width: 50ch; margin: 0 auto;">
+      Update your details or change your password.
+    </p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:24px;">
+  <div class="container" style="max-width: 640px; display:grid; gap:24px;">
+
+    <div class="checkout-form-card">
+      <h3>Account details</h3>
+
+      <form method="POST" action="{{ url_for('main.profile') }}" novalidate>
+        {{ profile_form.hidden_tag() }}
+
+        <div class="field-group">
+          {{ profile_form.full_name.label }}
+          {{ profile_form.full_name(placeholder="Your name") }}
+          {% if profile_form.full_name.errors %}
+            <ul class="field-errors">{% for error in profile_form.full_name.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+          {% endif %}
+        </div>
+
+        <div class="field-group">
+          {{ profile_form.email.label }}
+          {{ profile_form.email(placeholder="you@example.com") }}
+          {% if profile_form.email.errors %}
+            <ul class="field-errors">{% for error in profile_form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+          {% endif %}
+        </div>
+
+        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:16px;">
+          Member since {{ user.created_at.strftime('%B %d, %Y') }}
+        </p>
+
+        {{ profile_form.save(class="btn btn-primary btn-block") }}
+      </form>
+    </div>
+
+    <div class="checkout-form-card">
+      <h3>Change password</h3>
+
+      <form method="POST" action="{{ url_for('main.profile') }}" novalidate>
+        {{ password_form.hidden_tag() }}
+
+        <div class="field-group">
+          {{ password_form.current_password.label }}
+          {{ password_form.current_password(placeholder="Current password") }}
+          {% if password_form.current_password.errors %}
+            <ul class="field-errors">{% for error in password_form.current_password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+          {% endif %}
+        </div>
+
+        <div class="field-group">
+          {{ password_form.new_password.label }}
+          {{ password_form.new_password(placeholder="At least 8 characters") }}
+          {% if password_form.new_password.errors %}
+            <ul class="field-errors">{% for error in password_form.new_password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+          {% endif %}
+        </div>
+
+        <div class="field-group">
+          {{ password_form.confirm_new_password.label }}
+          {{ password_form.confirm_new_password(placeholder="Type it again") }}
+          {% if password_form.confirm_new_password.errors %}
+            <ul class="field-errors">{% for error in password_form.confirm_new_password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+          {% endif %}
+        </div>
+
+        {{ password_form.change_password(class="btn btn-outline btn-block") }}
+      </form>
+    </div>
+
+    <p style="text-align:center;">
+      <a href="{{ url_for('main.order_history') }}" class="btn btn-outline">View order history</a>
+    </p>
+  </div>
+</section>
+{% endblock %}
