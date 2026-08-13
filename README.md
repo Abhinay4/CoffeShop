@@ -1,4 +1,4 @@
-# Ember & Bean — Coffee Shop Website
+Pareta's— Coffee Shop Website
 
 A Flask + PostgreSQL website with a landing page, user registration, and
 login. Passwords are hashed with bcrypt, sessions are managed with
