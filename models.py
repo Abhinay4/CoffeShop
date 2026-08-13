@@ -20,8 +20,31 @@ class Product(db.Model):
     def price_display(self) -> str:
         return f"{Decimal(self.price):.2f}"
 
+    def average_rating(self):
+        """Mean star rating (1-5), or None if nobody has rated it yet."""
+        if not self.ratings:
+            return None
+        return round(sum(r.stars for r in self.ratings) / len(self.ratings), 1)
+
+    def rating_count(self) -> int:
+        return len(self.ratings)
+
     def __repr__(self) -> str:
         return f"<Product {self.slug}>"
+
+
+class Rating(db.Model):
+    __tablename__ = "ratings"
+
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=False, index=True)
+    stars = db.Column(db.Integer, nullable=False)  # 1-5
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+
+    product = db.relationship("Product", backref=db.backref("ratings", cascade="all, delete-orphan"))
+
+    def __repr__(self) -> str:
+        return f"<Rating product_id={self.product_id} stars={self.stars}>"
 
 
 class User(UserMixin, db.Model):

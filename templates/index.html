@@ -62,6 +62,21 @@
         <div>
           <p class="menu-name">{{ item.name }}</p>
           <p class="menu-notes">{{ item.notes }}</p>
+          <div class="menu-rating">
+            {% set avg = item.average_rating() %}
+            {% if avg %}
+              <span class="rating-stars" aria-hidden="true">{{ "★" * (avg|round|int) }}{{ "☆" * (5 - (avg|round|int)) }}</span>
+              <span class="rating-value">{{ avg }} ({{ item.rating_count() }})</span>
+            {% else %}
+              <span class="rating-value">No ratings yet</span>
+            {% endif %}
+            <form action="{{ url_for('main.rate_product', product_id=item.id) }}" method="POST" class="rate-form" aria-label="Rate {{ item.name }}">
+              <input type="hidden" name="next" value="{{ request.path }}#menu">
+              {% for s in range(1, 6) %}
+                <button type="submit" name="stars" value="{{ s }}" class="star-btn" title="Rate {{ s }} star{{ 's' if s > 1 else '' }}">★</button>
+              {% endfor %}
+            </form>
+          </div>
         </div>
         <div class="menu-buy">
           <span class="menu-price">₹{{ item.price_display() }}</span>
@@ -122,4 +137,49 @@
   </div>
 </section>
 
+{% if best %}
+<div class="promo-modal-overlay" id="promoModalOverlay">
+  <div class="promo-modal">
+    <button type="button" class="promo-modal-close" id="promoModalClose" aria-label="Close">&times;</button>
+    <span class="promo-modal-eyebrow">Customer favorite</span>
+    <h3>Try our top-rated coffee</h3>
+    <p class="promo-modal-name">{{ best.name }}</p>
+    <p class="promo-modal-notes">{{ best.notes }}</p>
+    <p class="promo-modal-rating">
+      {% set best_avg = best.average_rating() %}
+      {% if best_avg %}
+        <span aria-hidden="true">{{ "★" * (best_avg|round|int) }}{{ "☆" * (5 - (best_avg|round|int)) }}</span>
+        {{ best_avg }} · {{ best.rating_count() }} rating{{ 's' if best.rating_count() != 1 else '' }}
+      {% else %}
+        Be the first to rate it!
+      {% endif %}
+    </p>
+    <div class="promo-modal-actions">
+      <form action="{{ url_for('cart.add', product_id=best.id) }}" method="POST">
+        <input type="hidden" name="next" value="{{ request.path }}#menu">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="btn btn-primary">Add to cart &amp; try it</button>
+      </form>
+      <button type="button" class="btn btn-outline" id="promoModalDismiss">Maybe later</button>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+{% if best %}
+<script>
+  const promoOverlay = document.getElementById('promoModalOverlay');
+  function closePromoModal() { promoOverlay.classList.remove('open'); }
+  document.getElementById('promoModalClose').addEventListener('click', closePromoModal);
+  document.getElementById('promoModalDismiss').addEventListener('click', closePromoModal);
+  promoOverlay.addEventListener('click', (e) => {
+    if (e.target === promoOverlay) closePromoModal();
+  });
+  // Always show on landing-page load, per request — reappears every visit/refresh.
+  promoOverlay.classList.add('open');
+</script>
+{% endif %}
 {% endblock %}
