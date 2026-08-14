@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, abort
 
+from app import csrf
 from models import Product
 from cart_utils import (
     add_to_cart,
@@ -14,6 +15,7 @@ cart_bp = Blueprint("cart", __name__, url_prefix="/cart")
 
 
 @cart_bp.route("/add/<int:product_id>", methods=["POST"])
+@csrf.exempt
 def add(product_id):
     product = Product.query.get_or_404(product_id)
 
@@ -38,6 +40,7 @@ def view():
 
 
 @cart_bp.route("/update/<int:product_id>", methods=["POST"])
+@csrf.exempt
 def update(product_id):
     Product.query.get_or_404(product_id)
 
@@ -52,6 +55,7 @@ def update(product_id):
 
 
 @cart_bp.route("/remove/<int:product_id>", methods=["POST"])
+@csrf.exempt
 def remove(product_id):
     remove_from_cart(product_id)
     flash("Item removed from your cart.", "info")
@@ -59,6 +63,7 @@ def remove(product_id):
 
 
 @cart_bp.route("/clear", methods=["POST"])
+@csrf.exempt
 def clear():
     clear_cart()
     flash("Cart cleared.", "info")

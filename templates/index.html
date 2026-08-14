@@ -71,6 +71,7 @@
               <span class="rating-value">No ratings yet</span>
             {% endif %}
             <form action="{{ url_for('main.rate_product', product_id=item.id) }}" method="POST" class="rate-form" aria-label="Rate {{ item.name }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <input type="hidden" name="next" value="{{ request.path }}#menu">
               {% for s in range(1, 6) %}
                 <button type="submit" name="stars" value="{{ s }}" class="star-btn" title="Rate {{ s }} star{{ 's' if s > 1 else '' }}">★</button>
@@ -81,6 +82,7 @@
         <div class="menu-buy">
           <span class="menu-price">₹{{ item.price_display() }}</span>
           <form action="{{ url_for('cart.add', product_id=item.id) }}" method="POST" class="add-to-cart-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <input type="hidden" name="next" value="{{ request.path }}#menu">
             <input type="number" name="quantity" value="1" min="1" max="20" aria-label="Quantity">
             <button type="submit" class="btn btn-primary btn-sm">Add to cart</button>
@@ -156,6 +158,7 @@
     </p>
     <div class="promo-modal-actions">
       <form action="{{ url_for('cart.add', product_id=best.id) }}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <input type="hidden" name="next" value="{{ request.path }}#menu">
         <input type="hidden" name="quantity" value="1">
         <button type="submit" class="btn btn-primary">Add to cart &amp; try it</button>

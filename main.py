@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 
+from app import csrf
 from extensions import db
 from forms import ProfileForm, ChangePasswordForm
 from models import Product, Order, Rating
@@ -26,6 +27,7 @@ def index():
 
 
 @main_bp.route("/rate/<int:product_id>", methods=["POST"])
+@csrf.exempt
 def rate_product(product_id):
     product = Product.query.get_or_404(product_id)
 
